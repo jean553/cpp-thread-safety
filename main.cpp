@@ -1,10 +1,6 @@
-# cpp-thread-safety
+#include <iostream>
+#include <thread>
 
-## The problem to solve
-
-Two threads access concurently the same attribute `value` through the method `action`.
-
-```cpp
 class MyClass {
 
 public:
@@ -56,7 +52,3 @@ int main() {
 
     return EXIT_SUCCESS;
 }
-```
-
-The method `action` is `const`. As it modifies the `value` attribute,
-`value` is declared as `mutable`.
