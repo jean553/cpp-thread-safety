@@ -1,5 +1,12 @@
 # cpp-thread-safety
 
+## Compile and run the example
+
+```bash
+g++ main.cpp -o cpp-thread-safety -lpthread
+./cpp-thread-safety
+```
+
 ## The problem to solve
 
 Two threads access concurently the same attribute `value` through the method `action`.
