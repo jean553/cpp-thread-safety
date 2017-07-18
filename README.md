@@ -60,3 +60,14 @@ int main() {
 
 The method `action` is `const`. As it modifies the `value` attribute,
 `value` is declared as `mutable`.
+
+By executing this code, we get a list with (sometimes) two times
+the same number. Example:
+
+```
+3
+3
+```
+
+In fact, there is a concurrent access to the variable `value`,
+and that's what happen when the two threads to read and write it at the same time.
