@@ -71,3 +71,27 @@ the same number. Example:
 
 In fact, there is a concurrent access to the variable `value`,
 and that's what happen when the two threads to read and write it at the same time.
+
+## `std::mutex` solution
+
+We can add a mutex and a lock guard. Using the them, we can protect the attribute
+update action and the output action to the screen.
+
+```cpp
+{
+    std::lock_guard<std::mutex> guard(mutex);
+
+    value += 1;
+
+    std::cout << value << std::endl;
+}
+
+...
+
+private:
+
+    mutable std::mutex mutex;
+```
+
+The rendered output is now correct. In fact, we have the guarantee
+that the two threads never update and output `value` at the same time.
