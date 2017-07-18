@@ -67,7 +67,13 @@ the same number. Example:
 ```
 3
 3
+...
+6
+6
+...
 ```
+
+The displayed range is from 1 to 9 with double values (sometimes).
 
 In fact, there is a concurrent access to the variable `value`,
 and that's what happen when the two threads to read and write it at the same time.
@@ -95,3 +101,27 @@ private:
 
 The rendered output is now correct. In fact, we have the guarantee
 that the two threads never update and output `value` at the same time.
+
+The displayed range is from 1 to 19 without double values and without two numbers
+on the same line (`std::cout` is part of the `std::locak_guard` block).
+
+## `std::atomic` solution
+
+Instead of a lock guard, it is possible to simply declare `value` as atomic.
+
+```cpp
+private:
+
+    mutable std::atomic<int> value {0};
+```
+
+Once again, the output is the one expected, except that (sometimes),
+two different numbers are on the same line.
+
+In fact, contrary to the previous example, the `std::cout` action
+is not part of the `atomic` action. That's explain why some numbers
+are on the same line.
+
+This solution works as long as there is only one attribute to modify
+at every method call. If there is more than one attribute to modify,
+it is often better to use the `std::mutex` and `std::lock_guard` method.
