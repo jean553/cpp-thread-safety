@@ -1,5 +1,6 @@
 #include <iostream>
 #include <thread>
+#include <mutex>
 
 class MyClass {
 
@@ -18,9 +19,13 @@ public:
                 std::chrono::milliseconds(TIME)
             );
 
-            value += 1;
+            {
+                std::lock_guard<std::mutex> guard(mutex);
 
-            std::cout << value << std::endl;
+                value += 1;
+
+                std::cout << value << std::endl;
+            }
         }
     }
 
@@ -42,6 +47,7 @@ public:
 
 private:
 
+    mutable std::mutex mutex;
     mutable int value {0};
 };
 
